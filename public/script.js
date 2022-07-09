@@ -1,4 +1,4 @@
-const socketClient = new WebSocket('ws://localhost:80');
+const socketClient = new WebSocket(window.location.origin.replace(/^http/, 'ws'));
 
 const colorInput = document.getElementById('color');
 

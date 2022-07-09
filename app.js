@@ -2,14 +2,19 @@
 // npm i @babel/core @babel/preset - env @babel/preset-react @babel/register
 // также не забудь положить файл .babelrc в корень проекта
 require('@babel/register');
+require('dotenv').config();
 const express = require('express');
 const ReactDOMServer = require('react-dom/server');
 const React = require('react');
+const { createServer } = require('http');
 const createSocketServer = require('./socket');
 const expressConfig = require('./config/express');
 const Main = require('./views/Main');
 
+const server = createServer();
 const app = express();
+
+const { PORT } = process.env;
 
 // функция настройки экспресса
 expressConfig(app);
@@ -21,6 +26,7 @@ app.get('/', (req, res) => {
   res.end(html);
 });
 
-app.listen(3000, () => console.log('server started at 3000'));
+server.on('request', app);
+server.listen(PORT, () => console.log(`server started at ${PORT}`));
 
-createSocketServer(app);
+createSocketServer(app, server);

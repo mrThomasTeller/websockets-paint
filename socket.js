@@ -26,8 +26,8 @@ function writeCanvas(canvas) {
 
 const canvas = readCanvas();
 
-module.exports = function createSocketServer(app) {
-  const socketServer = new WebSocket.Server({ port: 80 });
+module.exports = function createSocketServer(app, server) {
+  const socketServer = new WebSocket.Server({ server });
 
   app.locals.canvas = canvas;
 
